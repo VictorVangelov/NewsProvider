@@ -28,8 +28,8 @@ public class WebViewer {
 
 		try {
 			for (News singleNews : NewsGetter.getNews(categoryLink)) {
-				sb.append(String.format(template, singleNews.getTitle(),
-						singleNews.getLink(), singleNews.getDescription()));
+				sb.append(String.format(template,singleNews.getLink(), singleNews.getTitle(),
+						 singleNews.getDescription()));
 			}
 		} catch (JSONException e) {
 			sb.append("<item>  <br><a Cannot generate news</a> </item>");
