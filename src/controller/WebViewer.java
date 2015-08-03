@@ -6,10 +6,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
 import org.codehaus.jettison.json.JSONException;
 
 @Path("/news")
+@Produces(MediaType.TEXT_HTML)
 public class WebViewer {
 
 	@GET
@@ -23,7 +23,7 @@ public class WebViewer {
 
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	public String welcomePage() {
+	public String getWelcomePage() {
 
 		return String.format(NewsServices.siteTemplate, NewsServices.contentInMain);
 

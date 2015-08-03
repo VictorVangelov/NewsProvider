@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
 import model.News;
 import model.RssContainer;
@@ -26,8 +23,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
-@Path("/rest/news")
-@Produces(MediaType.APPLICATION_JSON)
+
 public class NewsServices {
 	protected static NewsServices templateGetter = new NewsServices();
 	protected static String siteTemplate = templateGetter
@@ -37,14 +33,6 @@ public class NewsServices {
 	protected static String templateNews = templateGetter
 			.getTemplate("templateNews.html");
 
-	@GET
-	@Path("/{category}")
-	@Produces(value = {MediaType.APPLICATION_JSON,MediaType.TEXT_XML})
-	public List<News> JSONResponse(@PathParam("category") String category) {
-		String categoryLink = RssContainer.categoryLinkContainer.get(category
-				.toLowerCase());
-		return NewsServices.getNews(categoryLink);
-	}
 
 	static String getNewsHtmlForm(String category) {
 
@@ -115,12 +103,11 @@ public class NewsServices {
 		}
 		return newsList;
 	}
-
-	protected org.json.JSONArray getRestResponse(String category)
+	
+	protected org.json.JSONArray getRestResponse(@Context UriInfo uriInfo, String category)
 			throws UnirestException {
-
 		return Unirest
-				.post("http://localhost:8080/RssFeeder/rest/news/" + category)
+				.post(uriInfo.getAbsolutePathBuilder().path(NewsGetter.class) + category)
 				.asJson().getBody().getArray();
 
 	}

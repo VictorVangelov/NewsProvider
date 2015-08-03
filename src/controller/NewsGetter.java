@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
+
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -24,7 +25,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
-@Path("/news")
+@Path("/rest/news")
 public class NewsGetter {
 
 	public static List<News> getNews(String categoryLink)
@@ -69,7 +70,7 @@ public class NewsGetter {
 
 	}
 
-	@POST
+	@GET
 	@Path("/{category}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<News> JSONResponse(@PathParam("category") String category)
@@ -99,7 +100,7 @@ public class NewsGetter {
 			throws UnirestException {
 
 		return Unirest
-				.post("http://localhost:8080/RssFeeder/news/" + category)
+				.get("http://localhost:8080/RssFeeder/news/" + category)
 				.asJson().getBody().getArray();
 
 	}
