@@ -24,7 +24,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
-@Path("/rest/news")
+@Path("/news")
 public class NewsGetter {
 
 	public static List<News> getNews(String categoryLink)
@@ -42,7 +42,8 @@ public class NewsGetter {
 
 	}
 
-	public static ArrayList<SyndEntry> getSyndEntrys(String link) {
+	@SuppressWarnings("unchecked")
+    public static ArrayList<SyndEntry> getSyndEntrys(String link) {
 		ArrayList<SyndEntry> listOfSyndEntrys = new ArrayList<SyndEntry>();
 		try {
 			URL url = new URL(link);
@@ -54,7 +55,7 @@ public class NewsGetter {
 			List<SyndEntry> entries = feed.getEntries();
 			Iterator<SyndEntry> itEntries = entries.iterator();
 			SyndEntry entry;
-			StringBuilder siteContent = new StringBuilder();
+
 			while (itEntries.hasNext()) {
 				entry = itEntries.next();
 
@@ -98,7 +99,7 @@ public class NewsGetter {
 			throws UnirestException {
 
 		return Unirest
-				.post("http://localhost:8080/RssFeeder/rest/news/" + category)
+				.post("http://localhost:8080/RssFeeder/news/" + category)
 				.asJson().getBody().getArray();
 
 	}

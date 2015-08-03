@@ -13,7 +13,8 @@ import com.sun.jersey.api.json.JSONJAXBContext;
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
 	private JAXBContext context;
-	private Class[] types = { News.class };
+	@SuppressWarnings("rawtypes")
+    private Class[] types = { News.class };
 
 	public JAXBContextResolver() throws Exception {
 		this.context = new JSONJAXBContext(JSONConfiguration.natural().build(),
@@ -22,7 +23,7 @@ public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
 	@Override
 	public JAXBContext getContext(Class<?> objectType) {
-		for (Class type : types){
+		for (@SuppressWarnings("rawtypes") Class type : types){
 			if(type == objectType){
 				return context;
 			}

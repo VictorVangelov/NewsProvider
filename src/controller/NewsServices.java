@@ -9,13 +9,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
 import model.News;
 import model.RssContainer;
+
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -70,7 +73,8 @@ public class NewsServices {
 
 	}
 
-	public static ArrayList<SyndEntry> getSyndEntrys(String link) {
+	@SuppressWarnings("unchecked")
+    public static ArrayList<SyndEntry> getSyndEntrys(String link) {
 		ArrayList<SyndEntry> listOfSyndEntrys = new ArrayList<SyndEntry>();
 		try {
 			URL url = new URL(link);
